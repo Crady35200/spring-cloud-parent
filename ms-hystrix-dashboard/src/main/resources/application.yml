@@ -1,0 +1,13 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: ms-hystrix-dashboard
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka

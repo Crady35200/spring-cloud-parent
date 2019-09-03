@@ -1,0 +1,38 @@
+server:
+  port: 9999
+spring:
+  application:
+    name: ms-gateway-zuul
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
+#feign hystrix config
+feign:
+  hystrix:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+# zuul config 不配置默认服务名
+# localhost:9999/actuator/routes 可以查看项目所有映射
+zuul:
+  prefix: /api
+  #转发服务时，是否去掉 /api，默认为true去掉前缀
+  strip-prefix: true
+  routes:
+    ms-provider-user: /user/**
+    ms-consumer-movie: /movie/**
+    ms-consumer-order: /order/**
+  ignored-services: '*'
+  #禁用指定过滤器
+  PostCustomerFilter:
+    post:
+      disable: true
+#  ignored-services: ms-hystrix-dashboard,ms-hystrix-tuibine

@@ -1,0 +1,17 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: ms-hystrix-tuibine
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka
+#turbine config
+turbine:
+  app-config: ms-consumer-movie,ms-consumer-order
+  cluster-name-expression: "'default'"

@@ -1,0 +1,18 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: ms-springboot-admin
+  #spring security config
+  security:
+    user:
+      name: admin
+      password: admin
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
