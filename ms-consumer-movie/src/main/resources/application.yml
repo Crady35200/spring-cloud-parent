@@ -3,10 +3,17 @@ server:
 spring:
   application:
     name: ms-consumer-movie
+  sleuth:
+    web:
+      enabled: true
+    sampler:
+      # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
+      probability: 1.0
 eureka:
   instance:
     prefer-ip-address: true
     hostname: ms-consumer-movie
+    status-page-url: http://${spring.cloud.client.ip-address}:${server.port}/swagger-ui.html
   client:
     register-with-eureka: true
     fetch-registry: true

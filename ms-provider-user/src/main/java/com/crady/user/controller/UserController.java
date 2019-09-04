@@ -4,9 +4,7 @@ import com.crady.user.mapper.UserMapper;
 import com.crady.user.po.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,18 +21,19 @@ public class UserController {
     @Autowired
     UserMapper userMapper;
 
-    @RequestMapping("/getAllUsers")
+    @GetMapping("/getAllUsers")
     public List<User> getAllUsers(){
         List<User> users = userMapper.getAllUsers();
         log.info("查询所有用户成功:{}",users);
         return users;
     }
-    @RequestMapping("/getUserById/{id}")
+    @GetMapping("/getUserById/{id}")
     public User getUserById(@PathVariable Integer id){
         User user = userMapper.getUserById(id);
+        log.info("user={}",user);
         return user;
     }
-    @RequestMapping("/addUser")
+    @PostMapping("/addUser")
     public String addUser(User user){
         log.info("删除用户...");
         int result = userMapper.insertUser(user);

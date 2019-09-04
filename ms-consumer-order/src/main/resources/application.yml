@@ -7,6 +7,7 @@ eureka:
   instance:
     prefer-ip-address: true
     hostname: ms-consumer-order
+    status-page-url: http://${spring.cloud.client.ip-address}:${server.port}/swagger-ui.html
   client:
     register-with-eureka: true
     fetch-registry: true

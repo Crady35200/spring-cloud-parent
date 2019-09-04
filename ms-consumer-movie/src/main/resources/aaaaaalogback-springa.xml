@@ -156,4 +156,6 @@
     若是additivity设为false，则子Logger只会在自己的appender里输出，而不会在父Logger的appender里输出。
     -->
     <logger name="com.crady.user" level="DEBUG" additivity="true"/>
+    <logger name="org.springframework.cloud.sleuth" level="DEBUG" additivity="true"/>
+    <logger name="org.springframework.web.servlet.DispatcherServlet" level="DEBUG" additivity="true"/>
 </configuration>
