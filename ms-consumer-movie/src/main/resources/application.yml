@@ -26,6 +26,17 @@ management:
       exposure:
         include: "*"
 #feign hystrix config
-      feign:
-        hystrix:
-          enabled: true
+feign:
+  hystrix:
+    enabled: true
+#ribbon config
+ribbon:
+
+  eager-load:
+    #设置ribbon饥饿加载，防止懒加载可能造成第一次访问超时
+    enabled: true
+    clients: ms-provider-user
+ms-provider-user:
+  ribbon:
+    #配置负载均衡策略
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule

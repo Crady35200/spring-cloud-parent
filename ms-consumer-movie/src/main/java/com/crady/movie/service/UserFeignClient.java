@@ -7,6 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author :Crady
@@ -14,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * desc :
  **/
 //@FeignClient(name = "ms-provider-user",fallback = UserFeignClientFallback.class,path = "/user")
-@FeignClient(name = "ms-provider-user",fallbackFactory = UserFeignClientFallbackFactory.class,path = "/user")
+@FeignClient(name = "ms-provider-user",fallbackFactory = UserFeignClientFallbackFactory.class/*,path = "/user"*/)
 public interface UserFeignClient {
-    @RequestMapping(value = "/getUserById/{id}")
+    @RequestMapping(value = "user/getUserById/{id}")
     User getUserById(@PathVariable Integer id);
+
+    @RequestMapping(value = "ribbon/hello")
+    String hello(@RequestParam("msg")String msg);
 }
 @Component
 class UserFeignClientFallback implements UserFeignClient{
@@ -28,12 +32,33 @@ class UserFeignClientFallback implements UserFeignClient{
         user.setName("Fallback-服务降级，默认用户");
         return user;
     }
+
+    @Override
+    public String hello(String msg) {
+        return "服务降级";
+    }
 }
 @Component
 @Slf4j
 class UserFeignClientFallbackFactory implements FallbackFactory<UserFeignClient>{
-
     @Override
+    public UserFeignClient create(Throwable throwable) {
+        return new UserFeignClient() {
+            @Override
+            public User getUserById(Integer id) {
+                User user = new User();
+                user.setName("FallbackFactory-服务降级，默认用户");
+                return user;
+            }
+
+            @Override
+            public String hello(String msg) {
+                return "服务降级";
+            }
+        };
+    }
+
+/*    @Override
     public UserFeignClient create(Throwable throwable) {
         log.info("Throwable throwable:{}",throwable);
         return id -> {
@@ -41,5 +66,5 @@ class UserFeignClientFallbackFactory implements FallbackFactory<UserFeignClient>
             user.setName("FallbackFactory-服务降级，默认用户");
             return user;
         };
-    }
+    }*/
 }
