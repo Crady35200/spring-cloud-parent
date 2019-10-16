@@ -22,6 +22,9 @@ public interface UserFeignClient {
 
     @RequestMapping(value = "ribbon/hello")
     String hello(@RequestParam("msg")String msg);
+
+    @RequestMapping(value = "ribbon/timeOut")
+    String timeOut(@RequestParam(value = "timeOut",required = true) Integer timeOut);
 }
 @Component
 class UserFeignClientFallback implements UserFeignClient{
@@ -35,6 +38,11 @@ class UserFeignClientFallback implements UserFeignClient{
 
     @Override
     public String hello(String msg) {
+        return "服务降级";
+    }
+
+    @Override
+    public String timeOut(Integer timeOut) {
         return "服务降级";
     }
 }
@@ -53,6 +61,11 @@ class UserFeignClientFallbackFactory implements FallbackFactory<UserFeignClient>
 
             @Override
             public String hello(String msg) {
+                return "服务降级";
+            }
+
+            @Override
+            public String timeOut(Integer timeOut) {
                 return "服务降级";
             }
         };

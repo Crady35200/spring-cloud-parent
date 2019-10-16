@@ -4,6 +4,7 @@ import com.crady.movie.service.UserFeignClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,6 +25,12 @@ public class RibbonController {
     @GetMapping("hello")
     public String hello(String msg){
         String result = userFeignClient.hello(msg);
+        log.info(result);
+        return result;
+    }
+    @GetMapping("timeOut/{timeOut}")
+    public String hello(@PathVariable(value = "timeOut",required = true) Integer timeOut){
+        String result = userFeignClient.timeOut(timeOut);
         log.info(result);
         return result;
     }

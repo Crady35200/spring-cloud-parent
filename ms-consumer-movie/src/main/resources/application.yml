@@ -28,15 +28,49 @@ management:
 #feign hystrix config
 feign:
   hystrix:
+    #服务降级开关
     enabled: true
+  compression:
+    request:
+      #开启请求压缩
+      enabled: true
+      #压缩支持的类型
+      mime-types: text/xml,application/xml,application/json
+      #压缩数据大小下限
+      min-request-size: 1024
+    response:
+      #开启响应压缩
+      enabled: true
 #ribbon config
 ribbon:
-
   eager-load:
     #设置ribbon饥饿加载，防止懒加载可能造成第一次访问超时
     enabled: true
     clients: ms-provider-user
 ms-provider-user:
   ribbon:
+    #连接超时时间默认2000
+    ConnectTimeout: 3000
+    #负载均衡超时时间默认5000
+    ReadTimeout: 6000
+    MaxTotalHttpConnections: 500
+    MaxConnectionsPerHost: 100
+    #同一台机器重试次数(不包含首次调用)
+    MaxAutoRetries: 1
+    #切换实例重试次数(不包含首次调用)
+    MaxAutoRetriesNextServer: 1
     #配置负载均衡策略
-    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+    #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+#hystrix配置
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            #hystrix超时设置，默认1000ms
+            timeoutInMilliseconds: 15000
+#日志
+logging:
+  level:
+    com.crady.movie.service.UserFeignClient: debug
