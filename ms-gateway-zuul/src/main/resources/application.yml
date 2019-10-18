@@ -3,6 +3,11 @@ server:
 spring:
   application:
     name: ms-gateway-zuul
+  cloud:
+    loadbalancer:
+      retry:
+        #支持zuul使用httpClient模式时的重试
+        enabled: true
 eureka:
   instance:
     prefer-ip-address: true
@@ -14,7 +19,7 @@ eureka:
 #feign hystrix config
 feign:
   hystrix:
-    enabled: true
+    enabled: false
 management:
   endpoints:
     web:
@@ -26,6 +31,13 @@ zuul:
   prefix: /api
   #转发服务时，是否去掉 /api，默认为true去掉前缀
   strip-prefix: true
+  #zuul启动重试
+  retryable: true
+  host:
+    #连接超时默认2000ms
+    connect-timeout-millis: 2000
+    #socket默认超时时间10000ms
+    socket-timeout-millis: 10000
   routes:
     ms-provider-user: /user/**
     ms-consumer-movie: /movie/**
@@ -36,3 +48,23 @@ zuul:
     post:
       disable: true
 #  ignored-services: ms-hystrix-dashboard,ms-hystrix-tuibine
+#ribbon config
+ribbon:
+  eager-load:
+    #设置ribbon饥饿加载，防止懒加载可能造成第一次访问超时
+    enabled: true
+    clients: ms-provider-user
+ms-provider-user:
+  ribbon:
+    #连接超时时间默认2000
+    ConnectTimeout: 3000
+    #负载均衡超时时间默认5000
+    ReadTimeout: 6000
+    MaxTotalHttpConnections: 500
+    MaxConnectionsPerHost: 100
+    #同一台机器重试次数(不包含首次调用)
+    MaxAutoRetries: 1
+    #切换实例重试次数(不包含首次调用)
+    MaxAutoRetriesNextServer: 1
+    #配置负载均衡策略
+    #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
