@@ -2,6 +2,7 @@ package com.crady.user.controller;
 
 import com.mysql.jdbc.TimeUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +27,9 @@ public class RibbonController {
 
     @RequestMapping("hello")
     public String hello(@RequestParam("msg") String msg){
+        if("error".equals(msg)){
+            throw new IllegalArgumentException("模拟失败");
+        }
         HttpServletRequest request = ((ServletRequestAttributes)(RequestContextHolder.currentRequestAttributes())).getRequest();
         String result = "hello " + msg + " from IP= " + request.getRemoteAddr() + ",PORT= " + request.getServerPort();
         log.info(result);
