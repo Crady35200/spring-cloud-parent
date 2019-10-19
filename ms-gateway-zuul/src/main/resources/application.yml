@@ -3,6 +3,16 @@ server:
 spring:
   application:
     name: ms-gateway-zuul
+  servlet:
+    multipart:
+      #启用 http multipart上传处理
+      enabled: true
+      #上传文件单个文件最大大小默认1MB,不限制设置为-1
+      max-file-size: 100MB
+      #设置最大的请求文件大小默认10MB,不限制设置为-1
+      max-request-size: 100MB
+      #上传临时目录
+      location: /
   cloud:
     loadbalancer:
       retry:
