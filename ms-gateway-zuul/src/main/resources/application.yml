@@ -41,6 +41,13 @@ zuul:
   prefix: /api
   #转发服务时，是否去掉 /api，默认为true去掉前缀
   strip-prefix: true
+  #线程池隔离策略，zuul默认使用信号量
+  ribbon-isolation-strategy: thread
+  thread-pool:
+    #使用线程池隔离时，现成名称前缀
+    thread-pool-key-prefix: zuul-
+    #启用线程池隔离
+    use-separate-thread-pools: true
   #zuul启动重试
   retryable: true
   host:
@@ -48,6 +55,10 @@ zuul:
     connect-timeout-millis: 2000
     #socket默认超时时间10000ms
     socket-timeout-millis: 10000
+    #zuul最大连接数默认为200
+    max-total-connections: 500
+    #每个路由最大连接数默认20
+    max-per-route-connections: 100
   routes:
     ms-provider-user: /user/**
     ms-consumer-movie: /movie/**
@@ -78,3 +89,35 @@ ms-provider-user:
     MaxAutoRetriesNextServer: 1
     #配置负载均衡策略
     #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+#hystrix配置
+hystrix:
+  command:
+    #把default改成实例就是设置具体服务配置
+    default:
+      execution:
+        isolation:
+          #设置隔离策略默认thread，此外还要semaphore
+          strategy: THREAD
+          thread:
+            #超时时是否终端操作,默认true
+            interruptOnTimeout: true
+            #hystrix超时设置，默认1000ms
+            timeoutInMilliseconds: 15000
+        timeout:
+          #HystrixCommand命令执行是否设置超时(即是否启用timeoutInMilliseconds)，默认true
+          enable: true
+      circuitBreaker:
+        #设置打开fallback功能的错误比例,默认50
+        errorThresholdPercentage: 50
+        #强制打开断路器，拒绝所有功能，默认false
+        forceOpen: false
+        #强制关闭断路器，允许所有功能，默认false
+        forceClosed: false
+  threadpool:
+    default:
+      #当为线程隔离时设置线程池核心线程数大小,默认10
+      coreSize: 15
+      #当为线程隔离时设置线程池最大线程数大小,默认10
+      maximumSize: 50
+      #当为线程隔离时设置线程池最大空闲时间,默认1分钟
+      keepAliveTimeMinutes: 1
