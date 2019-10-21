@@ -121,3 +121,7 @@ hystrix:
       maximumSize: 50
       #当为线程隔离时设置线程池最大空闲时间,默认1分钟
       keepAliveTimeMinutes: 1
+      #阻塞队列大小，默认为-1 表示使用实时队列SynchronousQueue，大于0则使用LinkedBlockingQueue
+      maxQueueSize: 1000
+      #即使maxQueueSize没有达到，达到该值后请求也会被拒，默认5
+      queueSizeRejectionThreshold: 500
