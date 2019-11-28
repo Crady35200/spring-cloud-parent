@@ -49,6 +49,8 @@ ribbon:
     clients: ms-provider-user
 ms-provider-user:
   ribbon:
+    #ribbon缓存更新周期，默认30s
+    ServerListRefreshInterval: 30000
     #连接超时时间默认2000
     ConnectTimeout: 3000
     #负载均衡超时时间默认5000

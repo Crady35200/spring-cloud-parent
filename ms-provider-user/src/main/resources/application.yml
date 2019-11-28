@@ -14,11 +14,27 @@ eureka:
     hostname: ms-provider-user
     prefer-ip-address: true
     status-page-url: http://${spring.cloud.client.ip-address}:${server.port}/swagger-ui.html
+    #续约间隔时间,默认30s
+    lease-renewal-interval-in-seconds: 30
+    #服务时效时间，默认90s
+    lease-expiration-duration-in-seconds: 90
   client:
     register-with-eureka: true
     fetch-registry: true
+    #客户端从server端更新服务的周期,默认30s
+    registry-fetch-interval-seconds: 30
     service-url:
       defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
+    #连接超时时间，默认5s
+    eureka-server-connect-timeout-seconds: 5
+    #读取超时时间，默认8s
+    eureka-server-read-timeout-seconds: 8
+    #连接池最大活跃连接数，默认200
+    eureka-server-total-connections: 200
+    #每个host能使用的最大连接数，默认50
+    eureka-server-total-connections-per-host: 50
+    #连接池空闲时间，默认30s
+    eureka-connection-idle-timeout-seconds: 30
 #Log config
 #logging:
 #  config:
