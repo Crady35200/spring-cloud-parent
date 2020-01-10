@@ -73,7 +73,7 @@ hystrix:
           #设置隔离策略默认thread，此外还要semaphore
           strategy: THREAD
           thread:
-            #超时时是否终端操作,默认true
+            #超时时是否应中断执行操作,默认true
             interruptOnTimeout: true
             #hystrix超时设置，默认1000ms
             timeoutInMilliseconds: 15000

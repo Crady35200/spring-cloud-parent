@@ -73,7 +73,7 @@ eureka:
     #连接池连接空闲时间
     peer-node-connection-idle-timeout-seconds: 30
     instance:
-        hostname: peer1
+        hostname: peer2
         prefer-ip-address: true
         #续约间隔时间,默认30s
         lease-renewal-interval-in-seconds: 30
