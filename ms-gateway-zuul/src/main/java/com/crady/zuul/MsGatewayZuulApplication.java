@@ -26,22 +26,5 @@ public class MsGatewayZuulApplication {
     public static void main(String[] args) {
         SpringApplication.run(MsGatewayZuulApplication.class, args);
     }
-    @Bean
-    public PreCustomerFilter preZuulFilter(){
-        return new PreCustomerFilter();
-    }
-    @Bean
-    public RouteCustomerFilter routeZuulFilter(){
-        return new RouteCustomerFilter();
-    }
-    @Bean
-    public PostCustomerFilter postZuulFilter(){
-        return new PostCustomerFilter();
-    }
-    @Bean
-    public ErrorCustomerFilter errorZuulFilter(){
-        return new ErrorCustomerFilter();
-    }
-
 
 }

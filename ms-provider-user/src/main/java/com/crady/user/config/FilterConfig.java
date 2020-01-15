@@ -1,5 +1,6 @@
 package com.crady.user.config;
 
+import com.crady.user.filter.HttpHeaderParamFilter;
 import com.crady.user.filter.MyFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,16 @@ public class FilterConfig {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         MyFilter myFilter = new MyFilter();
         registrationBean.setFilter(myFilter);
+        List<String> patterns = new ArrayList<>();
+        patterns.add("/*");
+        registrationBean.setUrlPatterns(patterns);
+        return registrationBean;
+    }
+    @Bean
+    public FilterRegistrationBean httpHeaderParamFilter(){
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        HttpHeaderParamFilter filter = new HttpHeaderParamFilter();
+        registrationBean.setFilter(filter);
         List<String> patterns = new ArrayList<>();
         patterns.add("/*");
         registrationBean.setUrlPatterns(patterns);

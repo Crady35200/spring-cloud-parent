@@ -1,5 +1,6 @@
 package com.crady.movie.config;
 
+import com.crady.movie.interceptor.HttpHeaderParamFeignInterceptor;
 import com.crady.movie.interceptor.MyFeignInterceptor;
 import feign.Logger;
 import org.springframework.context.annotation.Bean;
@@ -33,5 +34,14 @@ public class FeignConfig {
     @Bean
     public MyFeignInterceptor feignInterceptor(){
         return new MyFeignInterceptor();
+    }
+
+    /**
+     * 注入http header参数拦截器
+     * @return
+     */
+    @Bean
+    public HttpHeaderParamFeignInterceptor headerParamFeignInterceptor(){
+        return new HttpHeaderParamFeignInterceptor();
     }
 }
