@@ -25,7 +25,6 @@
         <module>ms-springboot-admin</module>
         <module>ms-hystrix-dashboard</module>
         <module>ms-hystrix-turbine</module>
-        <module>ms-cmmon</module>
     </modules>
 
     <properties>

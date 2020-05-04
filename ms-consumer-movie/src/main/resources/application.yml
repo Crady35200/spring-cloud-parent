@@ -70,7 +70,7 @@ hystrix:
     default:
       execution:
         isolation:
-          #设置隔离策略默认thread，此外还要semaphore
+          #设置隔离策略默认thread，此外还有semaphore
           strategy: THREAD
           thread:
             #超时时是否应中断执行操作,默认true

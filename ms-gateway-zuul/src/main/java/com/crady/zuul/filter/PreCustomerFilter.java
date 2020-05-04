@@ -5,6 +5,7 @@ import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 
 /**
  * @author :Crady
@@ -16,7 +17,7 @@ public class PreCustomerFilter extends ZuulFilter {
 
     @Override
     public String filterType() {
-        return "pre";
+        return FilterConstants.PRE_TYPE;
     }
 
     @Override
