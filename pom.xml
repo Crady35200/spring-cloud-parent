@@ -36,7 +36,7 @@
         <springboot.admin.version>2.1.5</springboot.admin.version>
         <jolokia.version>1.6.1</jolokia.version>
         <mysql.version>5.1.46</mysql.version>
-        <swagger2.version>2.9.2</swagger2.version>
+        <swagger2.version>2.10.0</swagger2.version>
     </properties>
 
     <dependencies>
